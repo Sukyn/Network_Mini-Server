@@ -12,35 +12,38 @@
 #include <arpa/inet.h>
 #include <stdlib.h>
 #define SIZE 100
-#define PORT 9600
 
 
 
 
 
-int main(){
+
+int main(int argc, char *argv[]){
+
+  const char* hostname=argv[1]; /* localhost */
+  const char* portname=argv[2];
+  struct addrinfo hints;
+  memset(&hints,0,sizeof(hints));
+  hints.ai_family=AF_UNSPEC;
+  hints.ai_socktype=SOCK_DGRAM;
+  hints.ai_protocol=0;
+  hints.ai_flags=AI_ADDRCONFIG;
+  struct addrinfo* res=0;
+  int err=getaddrinfo(hostname,portname,&hints,&res);
+  if (err!=0) {
+      perror("failed to resolve remote socket address");
+      exit(EXIT_FAILURE);
+  }
+
+
 
   /* PF_INET = TCP/IP, SOCK_DGRAM = UDP */
   int sockfd;
   /* socket() */
-  sockfd = socket(PF_INET, SOCK_DGRAM, 0);
+  sockfd = socket(res->ai_family, res->ai_socktype, res->ai_protocol);
   if (sockfd < 0)
   {
     perror("Erreur lors de la création du socket\n") ;
-    exit(EXIT_FAILURE);
-  }
-
-
-  struct sockaddr_in server_address;
-  server_address.sin_family = PF_INET;
-  server_address.sin_port = htons(PORT);
-  server_address.sin_addr.s_addr = inet_addr(gethostbyname("localhost"));
-  server_address.sin_zero[8]='\0';
-
-  /* bind() */
-  if (bind(sockfd, (struct sockaddr*)&server_address, sizeof(struct sockaddr)) < 0)
-  {
-    perror("Le bind n'a pas fonctionné");
     exit(EXIT_FAILURE);
   }
 
@@ -50,16 +53,8 @@ int main(){
   scanf("%[^\n]", message);
 
   /* sendto() */
-  sendto(sockfd, (const char *)message, strlen(message), MSG_CONFIRM, (const struct sockaddr *) &server_address, sizeof(server_address));
+  sendto(sockfd, (const char *)message, strlen(message), 0, res->ai_addr, res->ai_addrlen);
   printf("Message du client envoyé !\n");
-
-  /* Version où le serveur envoie également des messages au client */
-  //char buffer[1024];
-  //int n, len;
-  //n = recvfrom(sockfd, (char *)buffer, 1024, MSG_WAITALL, (struct sockaddr *) &server_address, &len);
-  //buffer[n] = '\0';
-  //printf("Le serveur a dit : %s\n", buffer);
-  /* ------------ */
 
 
   /* close() */

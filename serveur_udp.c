@@ -28,7 +28,7 @@ if (sockfd < 0)
 struct sockaddr_in my_address;
 my_address.sin_family = PF_INET;
 my_address.sin_port = htons(PORT);
-my_address.sin_addr.s_addr = inet_addr(gethostbyname("localhost"));
+my_address.sin_addr.s_addr = htonl(INADDR_ANY);
 my_address.sin_zero[8]='\0';
 
 
@@ -46,11 +46,6 @@ int addrlen, n;
 
 addrlen = sizeof(client_address);
 
-/* Version où le serveur envoie aussi des messages */
-//char *message = "BONJOUR";
-//sendto(sockfd, (const char *)message, strlen(message), MSG_CONFIRM, (const struct sockaddr *) &client_address, addrlen);
-//printf("Message envoyé.\n");
-/* ----------- */
 
 int isTransmissionFinished = 0 ;
   do {
