@@ -33,16 +33,17 @@ int main(){
   struct sockaddr_in dest_addr;
   dest_addr.sin_family = PF_INET;
   dest_addr.sin_port = htons(PORT);
-  dest_addr.sin_addr.s_addr = inet_addr("0.0.0.0");
+  dest_addr.sin_addr.s_addr = inet_addr("127.0.0.1");
   dest_addr.sin_zero[8]='\0';
-
   /* connect() */
   connect(sockfd,(struct sockaddr*)&dest_addr, sizeof(struct sockaddr));
 
 
   /* read() */
   char buffer[1024];
-  read(sockfd, buffer, SIZE);
+  scanf("%[^\t\n]", buffer);
+  printf("YOU ENTERED : %s\n", buffer);
+  //read(sockfd, buffer, SIZE);
 
   /* write() */
   write(sockfd, buffer, SIZE);

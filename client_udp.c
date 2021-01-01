@@ -34,7 +34,7 @@ int main(){
   struct sockaddr_in server_address;
   server_address.sin_family = PF_INET;
   server_address.sin_port = htons(PORT);
-  server_address.sin_addr.s_addr = inet_addr("0.0.0.0");
+  server_address.sin_addr.s_addr = inet_addr(gethostbyname("localhost"));
   server_address.sin_zero[8]='\0';
 
   /* bind() */

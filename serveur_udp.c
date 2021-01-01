@@ -28,7 +28,7 @@ if (sockfd < 0)
 struct sockaddr_in my_address;
 my_address.sin_family = PF_INET;
 my_address.sin_port = htons(PORT);
-my_address.sin_addr.s_addr = inet_addr("0.0.0.0");
+my_address.sin_addr.s_addr = inet_addr(gethostbyname("localhost"));
 my_address.sin_zero[8]='\0';
 
 
