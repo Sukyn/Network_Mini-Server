@@ -33,10 +33,15 @@ int main(){
   struct sockaddr_in dest_addr;
   dest_addr.sin_family = PF_INET;
   dest_addr.sin_port = htons(PORT);
-  dest_addr.sin_addr.s_addr = inet_addr("127.0.0.1");
+  dest_addr.sin_addr.s_addr = inet_addr("192.168.0.84);
   dest_addr.sin_zero[8]='\0';
   /* connect() */
-  connect(sockfd,(struct sockaddr*)&dest_addr, sizeof(struct sockaddr));
+
+  if (connect(sockfd,(struct sockaddr*)&dest_addr, sizeof(struct sockaddr)) == -1)
+  {
+    perror("Erreur lors de la connexion\n");
+    exit(EXIT_FAILURE);
+  }
 
 
   /* read() */

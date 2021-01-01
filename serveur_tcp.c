@@ -35,7 +35,7 @@ struct sockaddr_in my_address, client_address;
 
 my_address.sin_family = PF_INET;
 my_address.sin_port = htons(PORT);
-my_address.sin_addr.s_addr = inet_addr("127.0.0.1");
+my_address.sin_addr.s_addr = htonl(INADDR_ANY);
 my_address.sin_zero[8]='\0';
 
 int addrlen = sizeof(struct sockaddr);
@@ -73,7 +73,6 @@ do {
   else wait(NULL);
 } while(!accepted);
 
-printf("%d a quitté", commeTuVeux);
 shutdown(sockfd,2);
 close(sockfd);
 
