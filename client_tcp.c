@@ -51,22 +51,4 @@ int main(){
   close(sockfd);
   return 0;
 
-
-
-
-/*
-
-
-
-
-    char msg[100];
-    printf("Entrez votre message: ");
-    gets(&msg); // ON N'UTILISE PAS GETS !!!! CA FAIT N'IMPORTE QUOI !!!!!
-
-    int w = write(sockfd, msg, strlen(msg));
-
-    close(sockfd);
-    printf("Client Dying.....\n");
-
-    return 0; */
 }

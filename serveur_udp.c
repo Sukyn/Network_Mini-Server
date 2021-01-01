@@ -60,9 +60,8 @@ int isTransmissionFinished = 0 ;
     printf("Client : %s\n", buffer);
 
     /* write() */
-    write(sockfd, buffer, n);
+    isTransmissionFinished = write(sockfd, buffer, n);
 
-    //isTransmissionFinished = listen(sockfd,5);
 
   } while(!isTransmissionFinished);
 

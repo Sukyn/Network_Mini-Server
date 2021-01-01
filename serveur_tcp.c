@@ -55,7 +55,7 @@ do {
   /* read() */
   read(sockfd, buffer, 100);
   /* write() */
-  write(sockfd, buffer, 100);
+  isTransmissionFinished = write(sockfd, buffer, 100);
 } while (!isTransmissionFinished);
 
 /* close() */
